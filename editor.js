@@ -204,7 +204,6 @@ function updateShader(fragmentCode) {
     return;
   }
 
-  console.log("did update");
   _fragmentShader = fragmentCode;
 
   isDirty = true;
