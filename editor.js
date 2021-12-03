@@ -7,7 +7,7 @@ import { WebsocketProvider } from "y-websocket";
 import { CodemirrorBinding } from "y-codemirror";
 import "codemirror/mode/clike/clike.js";
 import 'codemirror/addon/lint/lint';
-import __fragmentShader from "./fragmentShader.js";
+import __fragmentShader, __vertexShader from "./defaultShaders.js";
 import * as THREE from "three";
 
 const OT = require('@opentok/client');
@@ -210,22 +210,6 @@ function updateShader(fragmentCode) {
 }
 
 function updateScene() {
-  scene = new THREE.Scene();
-  geometry = new THREE.PlaneBufferGeometry(2, 2);
-
-  try {
-    material = new THREE.ShaderMaterial({
-      uniforms: uniforms,
-      vertexShader: vertexShader(),
-      fragmentShader: fragmentShader()
-    });
-  } catch (e) {
-    console.log("MY ERROR", e);
-    return;
-  }
-
-  mesh = new THREE.Mesh(geometry, material);
-  scene.add(mesh);
 }
 
 window.onload = (event) => {
@@ -306,11 +290,7 @@ function render() {
 }
 
 function vertexShader() {
-  return `        
-    void main() {
-      gl_Position = vec4( position, 1.0 );
-    }
-  `;
+  return _vertexShader;
 }
 
 function fragmentShader() {
