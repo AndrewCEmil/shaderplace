@@ -1,2 +1,5 @@
 node_modules/
 *.swp
+app/output
+app/server_pid
+dist/
