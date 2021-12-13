@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "description": "❤ a place for shader collaboration ❤",
   "scripts": {
+    "build": "webpack --mode=production",
     "dist": "webpack --mode=production --watch",
     "start": "webpack-dev-server --open-page index.html"
   },
