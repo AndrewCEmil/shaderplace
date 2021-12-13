@@ -5,5 +5,6 @@ cp style.css app/static/
 cp lint.css app/static/
 cp defaultShaders.js app/static/
 
-cp -r dist/* app/dist/
+npm run build
 
+cp -r dist/* app/dist/
