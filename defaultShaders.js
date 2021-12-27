@@ -1,4 +1,3 @@
-
 var _fragmentShader = `
 #ifdef GL_ES
 precision mediump float;
@@ -10,11 +9,10 @@ uniform float u_time;
 // main is a reserved function that is going to be called first
 void main(void)
 {
-    vec2 normCoord = gl_FragCoord.xy/u_resolution;
-    
+    vec2 centeredCoord = gl_FragCoord.xy - (u_resolution * .5);
+    vec2 uv = centeredCoord / u_resolution.yy;
     float time = u_time/5.0; //slow down time
 
-    vec2 uv = -1. + 2. * normCoord;
     float r = sin(time + uv.x); 
     // x is left to right, why we see red moving from right to left think about us as a camera moving around
     // sin returns a number from -1 to 1, and colors are from 0 to 1, so it clips to no red half the time

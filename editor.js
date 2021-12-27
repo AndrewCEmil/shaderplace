@@ -18,9 +18,7 @@ let glCanvas = null;
 var isDirty = false;
 let shaderProgram;
 
-// Aspect ratio and coordinate system
-// details
-let aspectRatio;
+// Coordinate system details
 let resolution;
 
 // Vertex information
@@ -141,6 +139,11 @@ function updateShader(fragmentCode) {
 window.onload = (event) => {
   webgl_startup();
   initYdoc();
+  window.addEventListener("resize", onWindowResize, false);
+}
+
+function onWindowResize(event) {
+  updateResolution();
 }
 
 function animateScene() {
@@ -172,7 +175,6 @@ function animateScene() {
 
     window.requestAnimationFrame(function(currentTime) {
       previousTime = previousTime + .05;
-      // TODO here check dirty bit and recompile?
       if (isDirty) {
         // recompile and clear dirty bit
         shaderProgram = buildShaderProgram();
@@ -216,20 +218,21 @@ function buildShaderProgram() {
   return program;
 }
 
-function webgl_startup() {
-  glCanvas = document.getElementById("glcanvas");
+function updateResolution() {
   if (glCanvas.width != glCanvas.clientWidth) {
     glCanvas.width = glCanvas.clientWidth;
   }
   if (glCanvas.height != glCanvas.clientHeight) {
     glCanvas.height = glCanvas.clientHeight;
   }
-  gl = glCanvas.getContext("webgl");
-
-  shaderProgram = buildShaderProgram();
-
-  aspectRatio = glCanvas.width/glCanvas.height;
   resolution = [glCanvas.width, glCanvas.height];
+}
+
+function webgl_startup() {
+  glCanvas = document.getElementById("glcanvas");
+  gl = glCanvas.getContext("webgl");
+  updateResolution();
+  shaderProgram = buildShaderProgram();
 
   vertexArray = new Float32Array([
       -1, 1,
